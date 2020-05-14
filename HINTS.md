@@ -1,3 +1,5 @@
+**Note: 10.128.76.174 is randomized: replace by any relevant IP**
+
 # hints challenge 1
 TL;DR
 ```
