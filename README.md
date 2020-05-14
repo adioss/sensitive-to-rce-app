@@ -1,9 +1,4 @@
 # sensitive-to-rce-app
-For demo purpose, this is an app that is sensitive to RCE.
-Note: 10.128.76.174 is randomized: replace by any relevant IP
-Exploits are:
-* RCE using cookie content (jackson lib)
-* RCE using JWT forged body (jjwt lib)
 
 ## Run
 ```
