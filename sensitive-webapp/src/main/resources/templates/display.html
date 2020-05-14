@@ -1,0 +1,376 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>RickRollHerCoaster</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+          integrity="sha256-9mbkOfVho3ZPXfM7W8sV2SndrGDuh7wuyLjtsWeTI1Q=" crossorigin="anonymous"/>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"
+            integrity="sha256-t8GepnyPmw9t+foMh3mKNvcorqNHamSKtKRxxpUEgFI=" crossorigin="anonymous"></script>
+    <style type="text/css">
+        body {
+            background-color: #DADADA;
+        }
+
+        body > .grid {
+            height: 100%;
+        }
+
+        .image {
+            margin-top: -100px;
+        }
+
+        .column {
+            max-width: 450px;
+        }
+    </style>
+    <script>
+        $(document)
+            .ready(function () {
+                hide();
+                $('#mainRickRollHerCoaster').show();
+
+                // fix main menu to page on passing
+                $('.main.menu').visibility({
+                    type: 'fixed'
+                });
+                $('.overlay').visibility({
+                    type: 'fixed',
+                    offset: 80
+                });
+
+                // lazy load images
+                $('.image').visibility({
+                    type: 'image',
+                    transition: 'vertical flip in',
+                    duration: 500
+                });
+
+                // show dropdown on hover
+                $('.main.menu  .ui.dropdown').dropdown({
+                    on: 'hover'
+                });
+
+                function arrayToTable(th, tableData) {
+                    var table = $('<table class="ui celled table"></table>');
+                    table.append(th);
+                    $(tableData).each(function (i, rowData) {
+                        var row = $('<tr></tr>');
+                        $(rowData).each(function (j, cellData) {
+                            row.append($('<td>' + cellData + '</td>'));
+                        });
+                        table.append(row);
+                    });
+                    return table;
+                }
+
+                function hide() {
+                    $('#mainGifsGlobal').hide();
+                    $('#mainLyrics').hide();
+                    $('#mainRickRollHerCoaster').hide();
+                }
+
+                $('.message .close')
+                    .on('click', function () {
+                        $(this)
+                            .closest('.message')
+                            .transition('fade')
+                        ;
+                    })
+                ;
+
+                $('#addGif').click(function () {
+                    $('#addGifModal').modal({
+                            onApprove: function () {
+                                $.get("display-rest/addMeme", function (data) {
+                                    var $gifAddedInfo = $('#gifAddedInfo');
+                                    $gifAddedInfo.removeClass("hidden").addClass("visible");
+                                    setTimeout(function () {
+                                        $gifAddedInfo.addClass("hidden").removeClass("visible");
+                                    }, 5000);
+                                });
+                            }
+                        }
+                    ).modal('show');
+                });
+
+                $('#gifs').click(function () {
+                    hide();
+                    var $mainGifs = $('#mainGifs');
+                    $mainGifs.empty();
+                    $('#mainGifsGlobal').show();
+
+                    var th = '<thead><tr><th>Url</th><th>Value</th></tr></thead>';
+                    $.get("display-rest/gifs", function (data) {
+                        $mainGifs.append(arrayToTable(th, eval(data)));
+                    });
+                });
+                $('#lyrics').click(function () {
+                    hide();
+                    var $mainLyrics = $('#mainLyrics');
+                    $mainLyrics.empty();
+                    $mainLyrics.show();
+
+                    var th = '<thead><tr><th>Value</th></tr></thead>';
+                    $.get("display-rest/lyrics", function (data) {
+                        $mainLyrics.append(arrayToTable(th, eval(data)));
+                    });
+                });
+
+                $('#rickRollHerCoaster').click(function () {
+                    hide();
+                    $('#mainRickRollHerCoaster').show();
+                });
+            })
+        ;
+    </script>
+    <style type="text/css">
+
+        body {
+            background-color: #FFFFFF;
+        }
+
+        .main.container {
+            margin-top: 2em;
+        }
+
+        .main.menu {
+            margin-top: 4em;
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
+            transition: box-shadow 0.5s ease,
+            padding 0.5s ease;
+        }
+
+        .main.menu .item img.logo {
+            margin-right: 1.5em;
+        }
+
+        .overlay {
+            float: left;
+            margin: 0em 3em 1em 0em;
+        }
+
+        .overlay .menu {
+            position: relative;
+            left: 0;
+            transition: left 0.5s ease;
+        }
+
+        .main.menu.fixed {
+            background-color: #FFFFFF;
+            border: 1px solid #DDD;
+            box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .overlay.fixed .menu {
+            left: 800px;
+        }
+
+        .text.container .left.floated.image {
+            margin: 2em 2em 2em -4em;
+        }
+
+        .text.container .right.floated.image {
+            margin: 2em -4em 2em 2em;
+        }
+
+        .ui.footer.segment {
+            margin: 5em 0em 0em;
+            padding: 5em 0em;
+        }
+    </style>
+</head>
+<body>
+<div class="ui main text container">
+    <h1 class="ui header">Rick Roll generator</h1>
+    <p></p>
+</div>
+
+
+<div class="ui borderless main menu">
+    <div class="ui text container">
+        <div class="item">
+            <img class="logo" src="https://www.slashgear.com/wp-content/uploads/2012/08/Rick-Astley-752x420.jpg">
+            <a id="rickRollHerCoaster" href="#rickRollHerCoaster" class="item">RickRollHerCoaster</a>
+        </div>
+        <a id="gifs" href="#gifs" class="item">Gifs</a>
+        <a id="lyrics" href="#lyrics" class="item">Lyrics</a>
+        <a href="#" class="ui right floated dropdown item">
+            Hi, mouaaaaaaaa <i class="dropdown icon"></i>
+            <div class="menu">
+                <div class="item">User profile</div>
+                <div class="item">Settings</div>
+                <div class="divider"></div>
+                <div class="item">Logout</div>
+            </div>
+        </a>
+    </div>
+</div>
+<div id="mainGifsGlobal" class="ui text container">
+    <div id="gifAddedInfo" class="ui hidden floating info message">
+        <i class="close icon"></i>
+        <div class="header">
+            Work in progress!
+        </div>
+        <p><b>microservice</b> is working! Content will be added as soon as being found</p>
+    </div>
+
+    <button id="addGif" class="ui secondary button">Add a gif</button>
+    <br/><br/>
+    <div id="addGifModal" class="ui modal">
+        <i class="close icon"></i>
+        <div class="image content">
+            <div class="description">
+                <div class="ui header">We are going to retrieve for you.</div>
+                <p>Using machine learning, our <b>microservice</b> is able to find best gif meme.</p>
+                <p>Ok for you?</p>
+            </div>
+        </div>
+        <div class="actions">
+            <div class="ui black deny button">
+                Nope
+            </div>
+            <div class="ui positive right labeled icon button">
+                Yep, let's go!
+                <i class="checkmark icon"></i>
+            </div>
+        </div>
+    </div>
+    <div id="mainGifs" class="ui text container">
+    </div>
+</div>
+<div id="mainLyrics" class="ui text container">
+</div>
+<div id="mainRickRollHerCoaster" class="ui text container">
+    <p>"Never Gonna Give You Up" appeared on Astley's 1987 debut album Whenever You Need Somebody.[3] The song, his solo
+        debut single, was a number-one hit on several international charts, including the Billboard Hot 100, Hot Adult
+        Contemporary Tracks, and the UK Singles Chart. The accompanying music video, Astley's first, features him
+        performing the song while dancing.[4]</p>
+    <p>The song's eventual Internet popularity may be traced back to a 2005 episode of It's Always Sunny In
+        Philadelphia, "Charlie Has Cancer", in which the song is used quite prominently. Rickrolling was reported to
+        have begun as a variant of an earlier prank from the imageboard 4chan known as duckrolling. The director of the
+        site, who went by the name "m00t," started replacing occurrences of the word "egg" on the site with the word
+        "duck." When the word "eggroll" was turned into "duckroll," users started changing links to sensational pictures
+        or news items so that they instead connected users to an edited picture of a duck with wheels; the user was then
+        said to have been "duckrolled."[1][5]</p>
+    <p>The first known instance of a rickroll occurred in May 2007 on /v/, 4chan's video game board. The first trailer
+        for the game Grand Theft Auto IV was unavailable due to heavy traffic, and a link claiming to be a mirror to the
+        trailer connected users to the Rick Astley video. The joke was confined to 4chan for a very brief period.[1]</p>
+    <div class="overlay">
+        <div class="ui labeled icon vertical menu">
+            <a class="item"><i class="twitter icon"></i> Tweet</a>
+            <a class="item"><i class="facebook icon"></i> Share</a>
+            <a class="item"><i class="mail icon"></i> E-mail</a>
+        </div>
+    </div>
+    <p>By May 2008,[6] the practice had spread beyond 4chan and became an Internet phenomenon,[7] eventually attracting
+        coverage in the mainstream media.[8] An April 2008 poll by SurveyUSA estimated that at least 18 million American
+        adults had been rickrolled.[9] In September 2009, Wired magazine published a guide to modern hoaxes which listed
+        rickrolling as one of the better known beginner-level hoaxes, alongside the fake e-mail chain letter.[10] The
+        term has been extended to simple hidden use of the song's lyrics.[11] Cover versions of "Never Gonna Give You
+        Up" have also been used as part of rickrolling; in April 2018, the creators of TV's Westworld released a video
+        that purported to be a spoiler guide for the entire second season in advance, but instead featured lead actress
+        Evan Rachel Wood singing the song while accompanied by a pianist.[12]</p>
+    <p></p>
+    <p>The original video[13] on YouTube from 2007 used for rickrolling was removed for terms-of-use violations in
+        February 2010[14] but the takedown was revoked within a day.[15] It was taken down again on 18 July 2014.[16] It
+        has since been unblocked again and has gained over 78 million views as of November 2018.[13] The RickAstleyVEVO
+        channel uploaded another version[17] on 24 October 2009 which has had over 500 million views as of November
+        2018. </p>
+    <img class="ui medium left floated image"
+         data-src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f7/RickRoll.png/250px-RickRoll.png">
+    <p>On August 25, 2019, a major Rickroll happened at Petco Park in San Diego, long after Rickrolling had ceased to be
+        a meme of note. The Boston Red Sox were playing a Major League Baseball game in San Diego against the San Diego
+        Padres, where the Red Sox had not played in six years. During a mid-inning break, the Padres' scoreboard began
+        to rather surprisingly play "Sweet Caroline", which has become a tradition at Red Sox home games – but the Red
+        Sox were the opposition in San Diego. As the Neil Diamond song was about to hit the chorus, however, the
+        videoboard suddenly switched to "Never Gonna Give You Up", much to the amusement of the crowd.[18]</p>
+    <p>In a March 2008 interview, Astley said that he found the rickrolling of Scientology to be "hilarious"; he also
+        said that he will not try to capitalise on the rickroll phenomenon with a new recording or remix of his own, but
+        that he would be happy to have other artists remix it. Overall, Astley is not troubled by the phenomenon,
+        stating that he finds it "bizarre and funny" and that his only concern is that his "daughter doesn't get
+        embarrassed about it."[19] A spokesperson for Astley's record label released a comment which showed that
+        Astley's interest with the phenomenon had faded, as they stated, "I'm sorry, but he's done talking about
+        Rickrolling".[5]</p>
+    <p>In November 2008, Rick Astley was nominated for "Best Act Ever" at the MTV Europe Music Awards after the online
+        nomination form was flooded with votes.[20] The push to make Astley the winner of the award, as well as efforts
+        to encourage MTV to personally invite Astley to the awards ceremony, continued after the announcement.[21] On 10
+        October, Astley's website confirmed that an invitation to the awards had been received. On 6 November 2008, just
+        hours before the ceremony was due to air, it was reported that MTV Europe did not want to give Astley the award
+        at the ceremony, instead wanting to present it at a later date. Many fans who voted for Astley felt the awards
+        ceremony failed to acknowledge him as a legitimate artist. Astley stated in an interview that he felt the award
+        was "daft", but noted that he thought that "MTV were thoroughly rickrolled", and went on to thank everyone who
+        voted for him.[22]</p>
+    <p>In 2009, Astley wrote about 4chan founder moot for Time magazine's annual Time 100 issue, and thanked moot for
+        the rickrolling phenomenon.[23]</p>
+    <img class="ui medium left floated image"
+         data-src="https://vignette.wikia.nocookie.net/randomstuffstuff/images/5/56/Rick_Astley.jpg/revision/latest?cb=20110306143251">
+    <p>According to The Register, as of 2010, Astley had only directly received $12 in performance royalties from
+        YouTube. Although by that time the song had been played 39 million times, Astley did not compose the song and
+        received only a performer's share of the sound recording copyright.[24] However, Astley denied those reports in
+        2016.[25]</p>
+    Its meme status led to the song's usage in the post-credits scene for Walt Disney Animation Studios’s 2018 film
+    Ralph Breaks the Internet, the sequel to 2012’s Wreck-It Ralph. The song also appears in the film Bumblebee, and was
+    featured at the end of its initial teaser trailer.[26]</p>
+    <p>On October 13th, 2019, the Sunday night NFL game between the Pittsburgh Steelers and Los Angeles Chargers at
+        Dignity Health Sports Park featured a case of rickrolling when the PA announcers, after a Chargers touchdown
+        brought the score to 24-10 Pittsburgh, decided to troll the partisan crowd by playing the beginning of the Styx
+        song "Renegade" (which had been played at the Steelers home Heinz Field since 2001) only to transition into
+        "Never Gonna Give You Up". The stunt caught fans and players from both teams by surprise (even being
+        acknowledged by the Steelers official social media accounts), and some Chargers players were not happy about the
+        Steelers anthem being played in their own home stadium. The Steelers won the game 24-17.[27][28]</p>
+</div>
+
+<div class="ui inverted vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui stackable inverted divided grid">
+            <div class="three wide column">
+                <h4 class="ui inverted header">Group 1</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Link One</a>
+                    <a href="#" class="item">Link Two</a>
+                    <a href="#" class="item">Link Three</a>
+                    <a href="#" class="item">Link Four</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header">Group 2</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Link One</a>
+                    <a href="#" class="item">Link Two</a>
+                    <a href="#" class="item">Link Three</a>
+                    <a href="#" class="item">Link Four</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header">Group 3</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Link One</a>
+                    <a href="#" class="item">Link Two</a>
+                    <a href="#" class="item">Link Three</a>
+                    <a href="#" class="item">Link Four</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header">Footer Header</h4>
+                <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <img src="https://i.pinimg.com/originals/91/be/10/91be106387b3456409c32f6b3bb827cd.jpg"
+             class="ui centered mini image">
+        <div class="ui horizontal inverted small divided link list">
+            <a class="item" href="#">Site Map</a>
+            <a class="item" href="#">Contact Us</a>
+            <a class="item" href="#">Terms and Conditions</a>
+            <a class="item" href="#">Privacy Policy</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

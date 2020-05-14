@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>RickRollHerCoaster</title>
+    <style type="text/css">
+    </style>
+</head>
+<body>
+<p>This page will generate a HS256 JWT. You need</p>
+<ul>
+    <li>
+        a public key (start with -----BEGIN PUBLIC KEY----- (...) and end with -----END PUBLIC KEY-----)
+    </li>
+    <li>
+        the body of the payload to sign in plain text
+    </li>
+</ul>
+It will generate the header (HS256), concatenate the body, sign with the public key
+<br/>
+<br/>
+<form action="#" th:action="@{/hackSignature}" th:object="${signForm}" method="post">
+    <div>
+        <label>public key:</label>
+        <br/>
+        <label>
+            <textarea style="width:500px; height:250px" type="text" th:field="*{publicKey}"></textarea>
+        </label>
+    </div>
+    <br/>
+    <div>
+        <label>JWT body in plaintext:</label>
+        <br/>
+        <label>
+            <textarea style="width:500px; height:250px" type="text" th:field="*{body}"></textarea>
+        </label>
+    </div>
+    <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+</form>
+<table border="1" style="width:300px">
+    <tr>
+        <td>Jwt created</td>
+        <td><label th:text="*{contentSigned}"></label></td>
+    </tr>
+    <tr>
+        <td>Jwt created encoded in base64</td>
+        <td><label th:text="*{contentSignedEncoded}"></label></td>
+    </tr>
+</table>
+</body>
+</html>
