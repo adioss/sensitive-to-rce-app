@@ -21,7 +21,7 @@
         <docker.image.prefix>adioss</docker.image.prefix>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <jackson.version.overrride>2.9.3</jackson.version.overrride>
+        <jackson.version.overrride>2.13.4.1</jackson.version.overrride>
         <junit.version>4.13-beta-3</junit.version>
         <dockerfile-maven-plugin.version>1.4.9</dockerfile-maven-plugin.version>
         <auth0-jwt.version>3.10.2</auth0-jwt.version>
