@@ -23,7 +23,7 @@
         <docker.image.prefix>adioss</docker.image.prefix>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <jackson.version.override>2.9.3</jackson.version.override>
+        <jackson.version.override>2.13.4.1</jackson.version.override>
         <junit.version>4.13-beta-3</junit.version>
         <dockerfile-maven-plugin.version>1.4.9</dockerfile-maven-plugin.version>
         <jjwt.version>0.4</jjwt.version>
